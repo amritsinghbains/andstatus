@@ -36,6 +36,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 
 import java.io.File;
 import java.util.Locale;
@@ -470,6 +471,11 @@ public class MyPreferences {
 
     public static void setThemedContentView(Activity activity, int layoutId) {
         loadTheme(activity);
+
+        // Solution 1. to getActionBar() == null
+        // from http://stackoverflow.com/questions/10031180/getactionbar-returns-null
+        activity.getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+
         activity.setContentView(layoutId);
         if (getBoolean(MyPreferences.KEY_TRUE_BLACK, false) && !isThemeLight()) {
             setViewToTrueBlack(activity.findViewById(R.id.myLayoutParent));
